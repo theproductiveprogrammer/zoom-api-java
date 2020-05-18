@@ -2,6 +2,7 @@ package com.salesboxai.zoom;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -23,22 +24,55 @@ public class ZoomAPI
 		this.jwtToken = jwtToken;
 	}
 
-	private String endpoint(String name) {
-		return cfg.API_ENDPOINT + "/" + name;
-	}
-
 	public ZoomUser getUser(String id) throws ZoomAPIException {
 		String url = endpoint("/users/" + id);
 		return get(url, ZoomUser.class);
 	}
 
+	public ZoomMeeting createMeeting(String user, ZoomMeetingRequest mreq) throws ZoomAPIException {
+		String url = endpoint("/users/" + user + "/meetings");
+		return post(url, mreq.toString(), ZoomMeeting.class);
+	}
+
+	private String endpoint(String name) {
+		return cfg.API_ENDPOINT + "/" + name;
+	}
+
+	public <T> T post(String url, String reqJSON, Class<T> cls) throws ZoomAPIException {
+		return call("POST", url, reqJSON, cls);
+	}
+
 	public <T> T get(String url, Class<T> cls) throws ZoomAPIException {
+		return call("GET", url, null, cls);
+	}
+
+	/*		outcome/
+	 * Make a generic call to the given URL with the given method and body, read
+	 * the response as a JSON and convert it into the requested class type.
+	 */
+	public <T> T call(String method, String url, String reqJSON, Class<T> cls) throws ZoomAPIException {
 		try {
 
 			URL url_ = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) url_.openConnection();
-			conn.setRequestMethod("GET");
+			conn.setRequestMethod(method);
 			conn.setRequestProperty("authorization", "Bearer " + jwtToken);
+
+			if(reqJSON != null && reqJSON.length() > 0) {
+				OutputStream out = null;
+				try {
+					conn.setRequestProperty("content-type", "application/json");
+					conn.setDoOutput(true);
+					out = conn.getOutputStream();
+					out.write(reqJSON.getBytes("UTF-8"));
+					out.flush();
+					out.close();
+				} catch(Throwable t) {
+					if(out != null) out.close();
+					throw new ZoomAPIException(t);
+				}
+
+			}
 
 			int status = conn.getResponseCode();
 			InputStream in = status > 299 ? conn.getErrorStream() : conn.getInputStream();
@@ -58,7 +92,7 @@ public class ZoomAPI
 			}
 			in.close();
 
-			if(status != 200) {
+			if(status > 299) {
 				throw new ZoomAPIException("Call failed with status: " + status + " " + body.toString("UTF-8"));
 			}
 
@@ -70,4 +104,5 @@ public class ZoomAPI
 			throw new ZoomAPIException(e);
 		}
 	}
+
 }

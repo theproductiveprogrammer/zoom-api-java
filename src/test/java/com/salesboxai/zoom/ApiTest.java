@@ -10,6 +10,7 @@ public class ApiTest
 	 */
 	public static void main(String[] args) throws ZoomAPIException {
 		getUserTest();
+		scheduleMeetingTest();
 	}
 
 	/*		outcome/
@@ -20,5 +21,12 @@ public class ApiTest
 		ZoomAPI za = new ZoomAPI(new Config().getValue("com.salesboxai.zoom.test.jwtToken"));
 		ZoomUser user = za.getUser("me");
 		System.out.println(user);
+	}
+
+	private static void scheduleMeetingTest() throws ZoomAPIException {
+		ZoomAPI za = new ZoomAPI(new Config().getValue("com.salesboxai.zoom.test.jwtToken"));
+		ZoomMeetingRequest mreq = ZoomMeetingRequest.requestDefaults("Test Meeting", "Let's talk about the weather");
+		ZoomMeeting meeting = za.createMeeting("me", mreq);
+		System.out.println(meeting);
 	}
 }

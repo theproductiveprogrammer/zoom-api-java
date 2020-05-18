@@ -1,12 +1,9 @@
 package com.salesboxai.zoom;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 /*		understand/
  * Represents a Zoom User with all the user details.
  */
-public class ZoomUser {
+public class ZoomUser extends AsJsonString {
 	public String id;
 	public String first_name;
 	public String last_name;
@@ -37,14 +34,4 @@ public class ZoomUser {
 	public String job_title;
 	public String company;
 	public String location;
-
-	public String toString() {
-		String str = this.getClass().getTypeName();
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.enable(SerializationFeature.INDENT_OUTPUT);
-		try {
-			str += mapper.writeValueAsString(this);
-		} catch (Throwable e) { /* ignore */ }
-		return str;
-	}
 }
