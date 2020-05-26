@@ -13,10 +13,14 @@ public class OAuthTest {
 			port = Integer.parseInt(cfg.getValue("com.salesboxai.zoom.test.port"));
 		} catch(Throwable t) {}
 
+		SimplePersist db = new SimplePersist("oauth-token.db");
+
 		new SimpleWebServer() {
 			@Override
 			protected void handleRequest(Request req, Response res) throws Exception {
-				System.out.println(req.toString());
+				db.save(req);
+				Request r = db.load(req.getClass());
+				System.out.println(r.toString());
 				res.status = 200;
 				res.body = "All Good!";
 			}
