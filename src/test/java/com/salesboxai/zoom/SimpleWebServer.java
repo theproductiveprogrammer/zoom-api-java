@@ -41,7 +41,8 @@ public abstract class SimpleWebServer {
 				handleRequest(req, res);
 				sendResponse(res, conn);
 			} catch(Throwable t) {
-				System.err.println(t);
+				t.printStackTrace();
+				sendErrorResponse(500, conn);
 			}
 			if(conn != null) {
 				try {
@@ -55,6 +56,15 @@ public abstract class SimpleWebServer {
 	 * Override this method to hook in your own logic for request/response 
 	 */
 	protected abstract void handleRequest(Request req, Response res) throws Exception;
+
+	/*		outcome/
+	 * Send error response to client
+	 */
+	private void sendErrorResponse(int status, Socket conn) throws IOException {
+		Response res = new Response();
+		res.status = status;
+		sendResponse(res, conn);
+	}
 
 	/*		outcome/
 	 * Send the response back over the connection

@@ -9,16 +9,19 @@ import java.util.Properties;
  * 
  * 		com.salesboxai.zoom.MAX_RESPONSE_SIZE  (default 5MB)
  * 		com.salesboxai.zoom.API_ENDPOINT (default https://api.zoom.us/v2)
+ * 		com.salesboxai.zoom.OAUTH_ENDPOINT (default https://zoom.us/oauth/token)
  */
 class Config {
 	public int MAX_RESPONSE_SIZE;
 	public String API_ENDPOINT;
+	public String OAUTH_ENDPOINT;
 	private Properties props;
 
 	public Config() {
 
 		MAX_RESPONSE_SIZE = 5 * 1024 * 1024;
-		API_ENDPOINT = "https://api.zoom.us/v2/";
+		API_ENDPOINT = "https://api.zoom.us/v2";
+		OAUTH_ENDPOINT = "https://zoom.us/oauth/token";
 
 		try {
 			InputStream in = Config.class.getClassLoader().getResourceAsStream("application.properties");
@@ -34,6 +37,9 @@ class Config {
 
 			s = props.getProperty("com.salesboxai.zoom.API_ENDPOINT");
 			if(s != null) API_ENDPOINT = s;
+
+			s = props.getProperty("com.salesboxai.zoom.OAUTH_ENDPOINT");
+			if(s != null) OAUTH_ENDPOINT = s;
 
 		} catch(Throwable t) {
 			/* ignore errors - just default */
