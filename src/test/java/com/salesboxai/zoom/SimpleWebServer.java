@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,8 @@ public abstract class SimpleWebServer {
 	 * Represents the HTTP request split into
 	 * 		- method
 	 * 		- url
+	 * 		- url path
+	 * 		- url query parameters
 	 * 		- ver (HTTP version)
 	 * 		- headers
 	 * 		- body
@@ -78,6 +81,8 @@ public abstract class SimpleWebServer {
 	static class Request {
 		public String method = "";
 		public String url = "";
+		public String path = "";
+		public Map<String, String> params = new HashMap<String, String>();
 		public String ver = "";
 		public Map<String, String> headers = new HashMap<String, String>();
 		public String body = "";
@@ -110,6 +115,19 @@ public abstract class SimpleWebServer {
 				method = startline[0];
 				url = startline[1];
 				ver = startline[2];
+			}
+			if(url != null && url.length() != 0) {
+				String[] pq = url.split("\\?", 2);
+				path = pq[0];
+				if(pq.length == 2) {
+					String[] qs = pq[1].split("&");
+					for(int i = 0;i < qs.length;i++) {
+						String[] kv = qs[i].split("=", 2);
+						if(kv.length == 2) {
+							params.put(URLDecoder.decode(kv[0], "UTF-8"), URLDecoder.decode(kv[1], "UTF-8"));
+						}
+					}
+				}
 			}
 			for(int i = 1;i < lines.length;i++) {
 				String[] kv = lines[i].split(":", 2);
