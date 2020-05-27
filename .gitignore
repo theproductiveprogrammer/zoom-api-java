@@ -1,4 +1,5 @@
 .*
 application.properties
 oauth-token.db
+settings.xml
 /target/
