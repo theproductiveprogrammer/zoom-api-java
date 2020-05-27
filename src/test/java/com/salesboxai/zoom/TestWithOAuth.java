@@ -81,9 +81,13 @@ public class TestWithOAuth {
 		new SimpleWebServer() {
 			@Override
 			protected void handleRequest(Request req, Response res) throws Exception {
-				ZoomAccessToken tkn = za.requestAccessToken(req.params.get("code"), redirectURL);
-				db.save(tkn);
-				System.out.println("Saved access token: " + tkn.toString());
+				String code = req.params.get("code");
+				if(code == null || code.length() == 0) res.status = 400;
+				else {
+					ZoomAccessToken tkn = za.requestAccessToken(code, redirectURL);
+					db.save(tkn);
+					System.out.println("Saved access token: " + tkn.toString());
+				}
 			}
 		}.start(port);
 		System.out.println("OAuth server started on port: " + port);
