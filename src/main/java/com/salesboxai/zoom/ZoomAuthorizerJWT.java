@@ -24,7 +24,7 @@ public class ZoomAuthorizerJWT implements IZoomAuthorizer {
 	}
 
 	@Override
-	public ZoomAccessToken currentOAuthToken() {
+	public ZoomAccessToken clearOAuthToken() {
 		return null;
 	}
 

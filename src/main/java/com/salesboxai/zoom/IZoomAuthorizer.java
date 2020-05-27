@@ -14,6 +14,6 @@ package com.salesboxai.zoom;
 public interface IZoomAuthorizer {
 	public String authHeader();
 	public boolean canRefresh();
-	public ZoomAccessToken currentOAuthToken();
+	public ZoomAccessToken clearOAuthToken();
 	public void onNewToken(ZoomAccessToken tkn) throws ZoomAPIException;
 }

@@ -1,5 +1,7 @@
 package com.salesboxai.zoom;
 
+import java.util.Base64;
+
 /**
  * This IZoomAuthorizer uses the ZoomAccessToken to authorize and
  * supports automatically refreshing the token when needed. When
@@ -11,28 +13,39 @@ package com.salesboxai.zoom;
  */
 public abstract class ZoomAuthorizerOAuth implements IZoomAuthorizer {
 
+	String clientId;
+	String clientSecret;
+	String appAuthToken;
 	protected ZoomAccessToken oauth;
 
-	public ZoomAuthorizerOAuth(ZoomAccessToken oauth) {
+	public ZoomAuthorizerOAuth(String clientId, String clientSecret, ZoomAccessToken oauth) {
+		this.clientId = clientId;
+		this.clientSecret = clientSecret;
+		String key = clientId + ":" + clientSecret;
+		this.appAuthToken = Base64.getEncoder().encodeToString(key.getBytes());
+
 		this.oauth = oauth;
 	}
 
 	@Override
 	public String authHeader() {
-		return "Bearer " + oauth.access_token;
+		if(oauth != null) return "Bearer " + oauth.access_token;
+		else return "Basic " + appAuthToken;
 	}
 
 	@Override
 	public boolean canRefresh() {
-		return true;
+		return oauth != null;
 	}
 
 	@Override
-	public ZoomAccessToken currentOAuthToken() {
-		return oauth;
+	public ZoomAccessToken clearOAuthToken() {
+		ZoomAccessToken old = oauth;
+		this.oauth = null;
+		return old;
 	}
 
-	protected void setCurrentOAuthToken(ZoomAccessToken oauth) {
+	protected void setNewOAuthToken(ZoomAccessToken oauth) {
 		this.oauth = oauth;
 	}
 }

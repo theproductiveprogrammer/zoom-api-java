@@ -50,13 +50,17 @@ public class ZoomAPI
 	}
 
 	private void refreshAccessToken(IZoomAuthorizer za) throws ZoomAPIException {
-		ZoomAccessToken tkn = za.currentOAuthToken();
+		ZoomAccessToken tkn = za.clearOAuthToken();
 		if(tkn == null) return;
 		ZoomAuthorizerOAuth oauth = (ZoomAuthorizerOAuth)za;
-		String url = cfg.OAUTH_ENDPOINT + "?grant_type=refresh_token&refresh_token=" + tkn.refresh_token;
-		ZoomAccessToken refreshed = post(url, null, ZoomAccessToken.class);
-		oauth.setCurrentOAuthToken(refreshed);
-		za.onNewToken(refreshed);
+		try {
+			String url = cfg.OAUTH_ENDPOINT + "?grant_type=refresh_token&refresh_token=" + URLEncoder.encode(tkn.refresh_token, "UTF-8");
+			ZoomAccessToken refreshed = post(url, null, ZoomAccessToken.class);
+			oauth.setNewOAuthToken(refreshed);
+			za.onNewToken(refreshed);
+		} catch (Throwable e) {
+			throw new ZoomAPIException(e);
+		}
 	}
 
 	private String endpoint(String name) {

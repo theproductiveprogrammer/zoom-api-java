@@ -85,7 +85,7 @@ Once you have a user token you can use it to make calls on the user’s behalf.
 
 ```java
 ZoomAuthorizerOAuth authorizer = new ZoomAuthorizerOAuth(oauthToken);
-ZoomAPI za = new ZoomAPI(authorizer);
+ZoomAPI za = new ZoomAPI(clientID, clientSecret, authorizer);
 
 // Get User
 ZoomUser user = za.getUser("me");

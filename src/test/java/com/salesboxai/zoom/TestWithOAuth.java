@@ -32,11 +32,20 @@ public class TestWithOAuth {
 	 * and use it to make a zoom call and retrieve details about the current user ("me")
 	 */
 	static void getUserTest() throws ZoomAPIException, IOException {
+		Config cfg = new Config();
+
+		String clientID = cfg.getValue("com.salesboxai.zoom.test.clientID");
+		String clientSecret = cfg.getValue("com.salesboxai.zoom.test.clientSecret");
+		if(clientID == null || clientID.length() == 0
+				|| clientSecret == null || clientSecret.length() == 0) {
+			throw new ZoomAPIException("Please set the clientID and clientSecret in application.properties");
+		}
+
 		SimplePersist db = new SimplePersist("oauth-token.db");
 		ZoomAccessToken tkn = ZoomAccessToken.fromJSONString(db.loadLastEntry());
 		if(tkn == null) throw new ZoomAPIException("No oauth token saved yet. Call saveZoomOAuthAccessToken() first");
 
-		ZoomAuthorizerOAuth authorizer = new ZoomAuthorizerOAuth(tkn) {
+		ZoomAuthorizerOAuth authorizer = new ZoomAuthorizerOAuth(clientID, clientSecret, tkn) {
 			@Override
 			public void onNewToken(ZoomAccessToken tkn) throws ZoomAPIException {
 				try {
