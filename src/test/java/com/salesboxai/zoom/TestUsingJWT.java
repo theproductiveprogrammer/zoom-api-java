@@ -1,9 +1,9 @@
 package com.salesboxai.zoom;
 
-/**
- * Test the Zoom API
+/*		understand/
+ * Test the Zoom API with a JSON Web Token App
  */
-public class ApiTest
+public class TestUsingJWT
 {
 	/*		outcome/
 	 * Runs tests of the ZoomAPI and displays the output

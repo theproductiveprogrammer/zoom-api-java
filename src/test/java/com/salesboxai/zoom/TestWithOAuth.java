@@ -2,17 +2,20 @@ package com.salesboxai.zoom;
 
 import java.io.IOException;
 
-/*		problem/
+/*		understand/
+ * Test the Zoom API Library using an OAuth App
+ *
+ * 		problem/
  * To test OAuth, we need to have a webhook endpoint which can accept the zoom callback
  * and save the Oauth token. Then we can use this token to make zoom calls.
- * 
+ *
  * 		way/
  * We can start this test with the saveZoomOAuthAccessToken() which starts a web server
  * that can be used as the webhook and then we can test the API calls (like getUserTest())
  * that will use the saved token. Set the clientID, clientSecret, and redirectURL in
  * `application.properties`.
  */
-public class OAuthTest {
+public class TestWithOAuth {
 
 	/*		understand/
 	 * Uncomment the functions one at a time to test.
