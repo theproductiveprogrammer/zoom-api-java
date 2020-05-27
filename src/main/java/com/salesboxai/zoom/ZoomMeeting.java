@@ -1,7 +1,9 @@
 package com.salesboxai.zoom;
 
-/*		understand/
+/**
  * Represents a Zoom Meeting with all the meeting details.
+ *
+ * @author charles.lobo
  */
 public class ZoomMeeting extends AsJsonString {
 	public Long id;

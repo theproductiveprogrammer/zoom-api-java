@@ -2,8 +2,10 @@ package com.salesboxai.zoom;
 
 import java.util.Base64;
 
-/*		understand/
+/**
  * Use this authorizer when we need to access the ZoomAPI::requestAccessToken()
+ *
+ * @author charles.lobo
  */
 public class ZoomAuthorizerGetOAuthToken implements IZoomAuthorizer {
 	

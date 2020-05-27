@@ -13,9 +13,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * 		understand/
  * Provides a Java wrapper around the Zoom API, returning Java objects
  * for easy use in code.
+ *
+ * @author charles.lobo
  */
 public class ZoomAPI
 {

@@ -1,11 +1,13 @@
 package com.salesboxai.zoom;
 
-/*		understand/
+/**
  * This IZoomAuthorizer uses the ZoomAccessToken to authorize and
  * supports automatically refreshing the token when needed. When
  * the token is refreshed the `onNewToken(ZoomAccessToken tkn)` callback
  * is invoked so that users have a chance to save the new token
  * for later use.
+ *
+ * @author charles.lobo
  */
 public abstract class ZoomAuthorizerOAuth implements IZoomAuthorizer {
 

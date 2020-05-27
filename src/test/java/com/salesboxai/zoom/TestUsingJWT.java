@@ -1,11 +1,13 @@
 package com.salesboxai.zoom;
 
-/*		understand/
+/**
  * Test the Zoom API with a JSON Web Token App
+ *
+ * @author charles.lobo
  */
 public class TestUsingJWT
 {
-	/*		outcome/
+	/**
 	 * Runs tests of the ZoomAPI and displays the output
 	 */
 	public static void main(String[] args) throws ZoomAPIException {
@@ -13,7 +15,7 @@ public class TestUsingJWT
 		scheduleMeetingTest();
 	}
 
-	/*		outcome/
+	/**
 	 * Get the zoom JWT token configured in `application.properties` and use it
 	 * to make a zoom call and retrieve details about the current user ("me").
 	 */
@@ -24,7 +26,7 @@ public class TestUsingJWT
 		System.out.println(user);
 	}
 
-	/*		outcome/
+	/**
 	 * Using the zoom JWT token configured in `application.properties` make
 	 * a zoom call to create a new meeting for the current user.
 	 */

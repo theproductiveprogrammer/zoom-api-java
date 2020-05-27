@@ -1,7 +1,9 @@
 package com.salesboxai.zoom;
 
-/*		understand/
+/**
  * Represents a Zoom User with all the user details.
+ *
+ * @author charles.lobo
  */
 public class ZoomUser extends AsJsonString {
 	public String id;

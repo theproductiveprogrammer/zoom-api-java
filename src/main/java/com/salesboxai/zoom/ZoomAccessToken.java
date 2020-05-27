@@ -1,7 +1,9 @@
 package com.salesboxai.zoom;
 
-/*		understand/
+/**
  * Represents a Zoom Access Token.
+ *
+ * @author charles.lobo
  */
 public class ZoomAccessToken extends AsJsonString {
 	public String access_token;

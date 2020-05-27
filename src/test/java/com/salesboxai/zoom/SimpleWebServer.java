@@ -10,19 +10,21 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
-/*		outcome/
+/**
  * This is a simple web server that can be used to handle web requests
  * Users are expected to override `handleRequest` to insert their own
  * business logic.
+ *
+ * @author charles.lobo
  */
 public abstract class SimpleWebServer {
 	static final int MAX_DATA_SIZE = 5 * 1024 * 1024;
 
-	/*		outcome/
+	/**
 	 * Starts a server socket listening in the given port and accepts
 	 * connections. Read in the request, call `handleRequest` to get
 	 * a response and send it back.
-	 * 
+	 * <p>
 	 * This server doesn't scale by using threads/processes/nio
 	 * because I want to keep it simple. Just handle the request then
 	 * pick the next one.
@@ -52,12 +54,12 @@ public abstract class SimpleWebServer {
 		}
 	}
 
-	/*		understand/
+	/**
 	 * Override this method to hook in your own logic for request/response 
 	 */
 	protected abstract void handleRequest(Request req, Response res) throws Exception;
 
-	/*		outcome/
+	/**
 	 * Send error response to client
 	 */
 	private void sendErrorResponse(int status, Socket conn) throws IOException {
@@ -66,7 +68,7 @@ public abstract class SimpleWebServer {
 		sendResponse(res, conn);
 	}
 
-	/*		outcome/
+	/**
 	 * Send the response back over the connection
 	 */
 	private void sendResponse(Response res, Socket conn) throws IOException {
@@ -75,15 +77,17 @@ public abstract class SimpleWebServer {
 		out.flush();
 	}
 
-	/*		understand/
-	 * Represents the HTTP request split into
-	 * 		- method
-	 * 		- url
-	 * 		- url path
-	 * 		- url query parameters
-	 * 		- ver (HTTP version)
-	 * 		- headers
-	 * 		- body
+	/**
+	 * Represents the HTTP request split into:
+	 * <ul>
+	 * 		<li>method
+	 * 		<li>url
+	 * 		<li>url path
+	 * 		<li>url query parameters
+	 * 		<li>ver (HTTP version)
+	 * 		<li>headers
+	 * 		<li>body
+	 * </ul>
 	 * This class can construct itself by reading from the connection
 	 * socket and convert itself (toString()) into the valid HTTP
 	 * representation.
@@ -168,14 +172,16 @@ public abstract class SimpleWebServer {
 		}
 	}
 
-	/*		understand/
+	/**
 	 * Represents a HTTP Response to be sent back to the server
 	 * containing:
-	 * 		- status (HTTP status)
-	 * 		- statusMsg (optional short additional status message)
-	 * 		- ver (HTTP version)
-	 * 		- headers
-	 * 		- body
+	 * <ul>
+	 * 		<li>status (HTTP status)
+	 * 		<li>statusMsg (optional short additional status message)
+	 * 		<li>ver (HTTP version)
+	 * 		<li>headers
+	 * 		<li>body
+	 * </ul>
 	 * This class can convert itself into a valid HTTP representation
 	 * to be sent back to the client.
 	 */

@@ -4,8 +4,10 @@ import com.salesboxai.zoom.ZoomMeeting.Recurrence;
 import com.salesboxai.zoom.ZoomMeeting.Settings;
 import com.salesboxai.zoom.ZoomMeeting.TrackingField;
 
-/*		understand/
+/**
  * Represents a request for a Zoom meeting
+ *
+ * @author charles.lobo
  */
 public class ZoomMeetingRequest extends AsJsonString {
 	public String topic;

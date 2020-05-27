@@ -10,9 +10,11 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/*		outcome/
- * We store a POJO as a Newline-delimitied JSON (http://ndjson.org/)
+/**
+ * Stores a POJO as a Newline-delimitied JSON (http://ndjson.org/)
  * - each version as a new line.
+ *
+ * @author charles.lobo
  */
 public class SimplePersist {
 
@@ -30,6 +32,9 @@ public class SimplePersist {
 		}
 	}
 
+	/**
+	 * Save the given POJO exported as JSON to a new line in our db file
+	 */
 	public <T> void save(T pojo) throws Exception {
 		BufferedWriter db = new BufferedWriter(new FileWriter(dbName, true));
 		ObjectMapper mapper = new ObjectMapper();
@@ -40,6 +45,10 @@ public class SimplePersist {
 		db.close();
 	}
 
+	/**
+	 * Load the last saved line from our db file and read it in as a JSON of the
+	 * requested POJO class
+	 */
 	public <T> T load(Class<T> cls) throws IOException {
 		String line, last = null;
 		try {

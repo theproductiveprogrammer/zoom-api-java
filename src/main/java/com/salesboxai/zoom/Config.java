@@ -3,13 +3,16 @@ package com.salesboxai.zoom;
 import java.io.InputStream;
 import java.util.Properties;
 
-/*		understand/
+/**
  * Load configuration parameters from `application.properties`
  * defaulting if not provided.
- * 
- * 		com.salesboxai.zoom.MAX_RESPONSE_SIZE  (default 5MB)
- * 		com.salesboxai.zoom.API_ENDPOINT (default https://api.zoom.us/v2)
- * 		com.salesboxai.zoom.OAUTH_ENDPOINT (default https://zoom.us/oauth/token)
+ * <ul>
+ * 		<li> com.salesboxai.zoom.MAX_RESPONSE_SIZE  (default 5MB)
+ * 		<li> com.salesboxai.zoom.API_ENDPOINT (default https://api.zoom.us/v2)
+ * 		<li> com.salesboxai.zoom.OAUTH_ENDPOINT (default https://zoom.us/oauth/token)
+ * </ul>
+ *
+ * @author charles.lobo
  */
 class Config {
 	public int MAX_RESPONSE_SIZE;
@@ -46,8 +49,8 @@ class Config {
 		}
 	}
 
-	/*		outcome/
-	 * Return a generic value stored in application properties
+	/**
+	 * Return a generic value stored in application properties.
 	 * Useful mostly for testing.
 	 */
 	public String getValue(String name) {

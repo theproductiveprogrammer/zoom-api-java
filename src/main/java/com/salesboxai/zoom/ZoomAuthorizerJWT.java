@@ -1,7 +1,9 @@
 package com.salesboxai.zoom;
 
-/*		understand/
- * The ZoomAuthorizer for JWT tokens
+/**
+ * The IZoomAuthorizer for JWT tokens
+ *
+ * @author charles.lobo
  */
 public class ZoomAuthorizerJWT implements IZoomAuthorizer {
 
