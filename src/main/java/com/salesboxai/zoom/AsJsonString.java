@@ -1,5 +1,6 @@
 package com.salesboxai.zoom;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -10,6 +11,16 @@ import com.fasterxml.jackson.databind.SerializationFeature;
  * @author charles.lobo
  */
 public class AsJsonString {
+
+	protected static <T> T fromString(String json, Class<T> cls) throws ZoomAPIException {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			return mapper.readValue(json.getBytes("UTF-8"), cls);
+		} catch(Throwable e) {
+			throw new ZoomAPIException(e);
+		}
+	}
 
 	/**
 	 * Convert this class into a nice JSON representation string

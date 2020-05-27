@@ -33,7 +33,7 @@ public class TestWithOAuth {
 	 */
 	static void getUserTest() throws ZoomAPIException, IOException {
 		SimplePersist db = new SimplePersist("oauth-token.db");
-		ZoomAccessToken tkn = db.load(ZoomAccessToken.class);
+		ZoomAccessToken tkn = ZoomAccessToken.fromJSONString(db.loadLastEntry());
 		if(tkn == null) throw new ZoomAPIException("No oauth token saved yet. Call saveZoomOAuthAccessToken() first");
 
 		ZoomAuthorizerOAuth authorizer = new ZoomAuthorizerOAuth(tkn) {

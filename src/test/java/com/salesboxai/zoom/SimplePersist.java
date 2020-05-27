@@ -46,10 +46,9 @@ public class SimplePersist {
 	}
 
 	/**
-	 * Load the last saved line from our db file and read it in as a JSON of the
-	 * requested POJO class
+	 * Load the last saved line from our DB file
 	 */
-	public <T> T load(Class<T> cls) throws IOException {
+	public String loadLastEntry() throws IOException {
 		String line, last = null;
 		try {
 			BufferedReader db = new BufferedReader(new FileReader(dbName));
@@ -58,9 +57,16 @@ public class SimplePersist {
 			}
 			db.close();
 		} catch(FileNotFoundException e) {}
-		if(last == null) return null;
+		return last;
+	}
+
+	/**
+	 * Load the last saved line from our db file and read it in as a JSON of the
+	 * requested POJO class
+	 */
+	public <T> T load(Class<T> cls) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		return mapper.readValue(last, cls);
+		return mapper.readValue(loadLastEntry(), cls);
 	}
 }
