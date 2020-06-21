@@ -11,8 +11,22 @@ public class TestUsingJWT
 	 * Runs tests of the ZoomAPI and displays the output
 	 */
 	public static void main(String[] args) throws ZoomAPIException {
-		getUserTest();
-		scheduleMeetingTest();
+		getMeetingList();
+		//getUserTest();
+		//scheduleMeetingTest();
+	}
+
+	/**
+	 * Get the zoom JWT token configured in `application.properties` and use it
+	 * to make a zoom call and retrieve details about the current user's meetings.
+	 * @throws ZoomAPIException 
+	 */
+	static void getMeetingList() throws ZoomAPIException {
+		ZoomAuthorizerJWT authorizer = new ZoomAuthorizerJWT(new Config().getValue("com.salesboxai.zoom.test.jwtToken"));
+		ZoomAPI za = new ZoomAPI(authorizer);
+		ZoomMeetingListIterator itr = za.listMeetings("me");
+		System.out.println("Found " + itr.total() + " meetings");
+		while(itr.hasNext()) System.out.println(itr.next());
 	}
 
 	/**

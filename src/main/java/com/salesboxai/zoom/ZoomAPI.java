@@ -38,6 +38,10 @@ public class ZoomAPI
 		return post(url, mreq.toString(), ZoomMeeting.class);
 	}
 
+	public ZoomMeetingListIterator listMeetings(String user) throws ZoomAPIException {
+		return new ZoomMeetingListIterator(this, user);
+	}
+
 	public ZoomAccessToken requestAccessToken(String code, String redirecturl) throws ZoomAPIException {
 		try {
 			code = URLEncoder.encode(code, StandardCharsets.UTF_8.toString());
@@ -63,7 +67,7 @@ public class ZoomAPI
 		}
 	}
 
-	private String endpoint(String name) {
+	String endpoint(String name) {
 		return cfg.API_ENDPOINT + "/" + name;
 	}
 
